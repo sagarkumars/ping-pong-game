@@ -5,6 +5,7 @@ from boll import Boll
 from paddle import Paddle
 import random
 
+from scoreboard import ScoreBoard
 
 screen = Screen()
 screen.tracer(0)
@@ -14,6 +15,7 @@ screen.title("ping-pong")
 right_puddle = Paddle((360, 0))
 left_puddle = Paddle((-360, 0))
 boll = Boll()
+scoreboard = ScoreBoard()
 screen.listen()
 
 
@@ -37,5 +39,13 @@ while game_is_on:
             or boll.distance(left_puddle) < 50 and boll.xcor() < -320):
         boll.bounce_x()
 
+    # detect miss
+    if boll.xcor() > 380:
+        boll.reset_position()
+        scoreboard.right_scored()
+
+    if boll.xcor() < -380:
+        boll.reset_position()
+        scoreboard.left_scored()
 
 screen.exitonclick()
