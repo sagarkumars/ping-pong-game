@@ -26,7 +26,7 @@ screen.onkey(left_puddle.down, "s")
 
 game_is_on = True
 while game_is_on:
-    time.sleep(0.1)
+    time.sleep(boll.move_speed)
     boll.move()
     screen.update()
 
