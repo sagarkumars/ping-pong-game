@@ -1,6 +1,10 @@
+import time
 from turtle import Screen
 
+from boll import Boll
 from paddle import Paddle
+import random
+
 
 screen = Screen()
 screen.tracer(0)
@@ -9,6 +13,7 @@ screen.bgcolor("black")
 screen.title("ping-pong")
 right_puddle = Paddle((360, 0))
 left_puddle = Paddle((-360, 0))
+boll = Boll()
 screen.listen()
 
 
@@ -19,6 +24,18 @@ screen.onkey(left_puddle.down, "s")
 
 game_is_on = True
 while game_is_on:
+    time.sleep(0.1)
+    boll.move()
     screen.update()
+
+    # bounce walls
+    if boll.ycor() > 280 or boll.ycor() < -280:
+        boll.bounce_y()
+
+    # bounce paddle
+    if (boll.distance(right_puddle) < 50 and boll.xcor() > 320
+            or boll.distance(left_puddle) < 50 and boll.xcor() < -320):
+        boll.bounce_x()
+
 
 screen.exitonclick()
